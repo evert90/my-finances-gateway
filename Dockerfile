@@ -1,9 +1,17 @@
-FROM gradle:jdk21-corretto-al2023
+FROM gradle:jdk21-corretto-al2023 AS build
 
-RUN ./gradlew clean assemble
+ WORKDIR /app
+ COPY . .
 
-COPY build/libs/myfinances-gateway-*.jar myfinances-gateway.jar
+ RUN chmod +x gradlew
+
+ RUN ./gradlew clean build -x test
+
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
 
 EXPOSE 8080
 
-CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/myfinances-gateway.jar"]
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
