@@ -41,8 +41,3 @@ server:
   reactive:
     session:
       timeout: 2880m
-
-logging:
-  level:
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
