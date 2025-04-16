@@ -25,6 +25,9 @@ public class LogoutController {
     @Value("${IDP_URL}")
     private String idpUrl;
 
+    @Value("${APP_URL}")
+    private String app_url;
+
     private final SecurityContextServerLogoutHandler logoutHandler = new SecurityContextServerLogoutHandler();
 
     @GetMapping("/gateway/logout")
@@ -32,7 +35,7 @@ public class LogoutController {
         String targetUrl = UriComponentsBuilder
                 .fromUri(URI.create(idpUrl + "/logout"))
                 .queryParam("client_id", idpClientId)
-                .queryParam("logout_uri", getAddress(request))
+                .queryParam("logout_uri", app_url)
                 .encode(UTF_8)
                 .build()
                 .toUriString();
@@ -45,18 +48,5 @@ public class LogoutController {
                     exchange.getResponse().getHeaders().setLocation(URI.create(targetUrl));
                 }))
                 .then(exchange.getResponse().setComplete());
-    }
-
-    private String getAddress(ServerHttpRequest request) {
-        String scheme = request.getURI().getScheme();
-        String host = request.getURI().getHost();
-        String baseUrl = scheme + "://" + host;
-
-        int port = request.getURI().getPort();
-        if (!scheme.equals("https") && port != 80) {
-            baseUrl += ":" + port;
-        }
-
-        return baseUrl;
     }
 }
