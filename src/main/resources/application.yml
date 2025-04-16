@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: myfinances-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: api
+          uri: ${API_URL}
+          predicates:
+            - Path=/api/**
+          filters:
+            - TokenRelay=
+        - id: frontend
+          uri: ${FRONTEND_URL}
+          predicates:
+            - Path=/**
+  security:
+    oauth2:
+      client:
+        provider:
+          cognito:
+            issuer-uri: ${IDP_ISSUER}
+            user-name-attribute: email
+        registration:
+          cognito:
+            provider: cognito
+            client-id: ${IDP_CLIENT_ID}
+            client-secret: ${IDP_CLIENT_SECRET}
+            scope: openid,email,profile
+            redirect-uri: ${APP_URL}/login/oauth2/code/cognito
+# Actuator
+management:
+  server:
+    port: 8082
+  endpoints:
+    web:
+      exposure:
+        include: info,health
+
+server:
+  reactive:
+    session:
+      timeout: 2880m
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
