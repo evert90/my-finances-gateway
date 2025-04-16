@@ -52,7 +52,10 @@ public class SecurityConfiguration {
                         .anyExchange()
                         .authenticated()
                 )
-                .oauth2Login(login -> login.authorizedClientRepository(authorizedClientRepository()))
+                .oauth2Login(login -> login
+                        .authorizedClientRepository(authorizedClientRepository())
+                        .authorizationRequestResolver(new CustomAuthorizationRequestResolver(clientRegistrationRepository)
+                ))
                 .build();
     }
 
