@@ -1,7 +1,6 @@
 package br.dev.projects.myfinances_gateway.configuration;
 
 
-import br.dev.projects.myfinances_gateway.matcher.NoPathMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.server.Cookie;
 import org.springframework.context.annotation.Bean;
@@ -17,8 +16,6 @@ import org.springframework.security.web.server.csrf.CookieServerCsrfTokenReposit
 import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.security.web.server.csrf.ServerCsrfTokenRequestHandler;
 import org.springframework.security.web.server.csrf.XorServerCsrfTokenRequestAttributeHandler;
-import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.server.WebFilter;
 import reactor.core.publisher.Mono;
 
@@ -48,7 +45,6 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(tokenRepository)
                         .csrfTokenRequestHandler(requestHandler)
-                        .requireCsrfProtectionMatcher(new NoPathMatcher("/monitoring/**"))
                 )
                 .authorizeExchange(exchange -> exchange
                         .pathMatchers("/manifest.json", "/api/**", "/version/**", "/gateway/version/**")
