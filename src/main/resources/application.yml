@@ -1,6 +1,11 @@
 spring:
   application:
     name: myfinances-gateway
+  session:
+    store-type: redis
+  data:
+    redis:
+      host: ${REDIS_URL}
   cloud:
     gateway:
       routes:
