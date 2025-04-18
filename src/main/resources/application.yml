@@ -20,11 +20,11 @@ spring:
           predicates:
             - Path=/app/**
         - id: root-redirect
-          uri: no-op://
+          uri: http://localhost  # URI "falsa", será aplicado o redirect
           predicates:
             - Path=/
           filters:
-            - RedirectTo=302, /app/
+            - RedirectTo=302, /app
   security:
     oauth2:
       client:
