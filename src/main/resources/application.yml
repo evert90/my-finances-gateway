@@ -18,7 +18,13 @@ spring:
         - id: frontend
           uri: ${FRONTEND_URL}
           predicates:
-            - Path=/**
+            - Path=/app/**
+        - id: root-redirect
+          uri: no-op://
+          predicates:
+            - Path=/
+          filters:
+            - RedirectTo=302, /app/
   security:
     oauth2:
       client:
