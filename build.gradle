@@ -2,7 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.4'
 	id 'io.spring.dependency-management' version '1.1.7'
-	id "com.gorylenko.gradle-git-properties" version "2.5.0"
+	id "io.sentry.jvm.gradle" version "5.3.0"
 }
 
 group = 'br.dev.projects'
@@ -34,10 +34,17 @@ dependencies {
 	implementation 'org.springframework.session:spring-session-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 
+	implementation 'io.sentry:sentry-spring-boot-starter-jakarta:8.8.0'
+	implementation 'io.sentry:sentry-logback:8.8.0'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+springBoot {
+	buildInfo()
 }
 
 dependencyManagement {

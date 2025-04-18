@@ -51,4 +51,11 @@ management:
 server:
   reactive:
     session:
-      timeout: 2880m
+      timeout: 1440m
+
+#MONITORING
+sentry:
+  exception-resolver-order: -2147483647
+  release: ${SOURCE_COMMIT:0.0.0}
+  traces-sample-rate: 1.0
+  send-default-pii: true
