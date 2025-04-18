@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/sessions")
+@RequestMapping("gateway/sessions")
 @Profile("!disable-redis")
 public class SessionController {
 
