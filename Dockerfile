@@ -1,11 +1,9 @@
 FROM gradle:8.13-jdk21-corretto-al2023 AS build
 
- WORKDIR /app
- COPY . .
+WORKDIR /app
+COPY . .
 
- RUN chmod +x gradlew
-
- RUN ./gradlew clean build -x test
+RUN gradle assemble --no-daemon
 
 FROM eclipse-temurin:21-jre
 
