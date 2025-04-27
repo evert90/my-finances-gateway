@@ -13,6 +13,9 @@ COPY --from=build /app/build/libs/*.jar app.jar
 COPY sentry/sentry-opentelemetry-agent-8.8.0.jar /sentry/sentry-opentelemetry-agent.jar
 
 ENV SENTRY_AUTO_INIT false
+ENV OTEL_LOGS_EXPORTER none
+ENV OTEL_METRICS_EXPORTER none
+ENV OTEL_TRACES_EXPORTER none
 
 EXPOSE 8080
 
