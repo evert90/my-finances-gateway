@@ -1,4 +1,4 @@
-FROM gradle:jdk21-corretto-al2023 AS build
+FROM gradle:8.13.0-jdk21-corretto-al2023 AS build
 
  WORKDIR /app
  COPY . .
