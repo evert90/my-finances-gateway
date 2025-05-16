@@ -1,6 +1,7 @@
 package br.dev.projects.myfinances_gateway.configuration;
 
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
+import org.springframework.security.oauth2.client.web.server.DefaultServerOAuth2AuthorizationRequestResolver;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -8,10 +9,10 @@ import reactor.core.publisher.Mono;
 
 public class CustomAuthorizationRequestResolver implements org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizationRequestResolver {
 
-    private final org.springframework.security.oauth2.client.web.server.DefaultServerOAuth2AuthorizationRequestResolver defaultResolver;
+    private final DefaultServerOAuth2AuthorizationRequestResolver defaultResolver;
 
     public CustomAuthorizationRequestResolver(ReactiveClientRegistrationRepository repo) {
-        this.defaultResolver = new org.springframework.security.oauth2.client.web.server.DefaultServerOAuth2AuthorizationRequestResolver(repo);
+        this.defaultResolver = new DefaultServerOAuth2AuthorizationRequestResolver(repo);
     }
 
     @Override
