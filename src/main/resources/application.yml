@@ -41,6 +41,7 @@ management:
         include: info,health
 
 server:
+  forward-headers-strategy: native
   reactive:
     session:
       timeout: 30d
