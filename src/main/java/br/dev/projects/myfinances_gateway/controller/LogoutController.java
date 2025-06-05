@@ -33,7 +33,7 @@ public class LogoutController {
     @GetMapping("/gateway/logout")
     public Mono<Void> logout(ServerWebExchange exchange, Authentication authentication, ServerHttpRequest request) {
         String targetUrl = UriComponentsBuilder
-                .fromUri(URI.create(idpUrl + "/logout"))
+                .fromUri(URI.create(idpUrl + "/v2/logout"))
                 .queryParam("client_id", idpClientId)
                 .queryParam("logout_uri", app_url)
                 .encode(UTF_8)

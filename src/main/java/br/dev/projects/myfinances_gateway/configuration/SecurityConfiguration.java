@@ -73,7 +73,7 @@ public class SecurityConfiguration {
         var unauthorizedEntryPoint = new HttpStatusServerEntryPoint(HttpStatus.UNAUTHORIZED);
         var unauthorizedMatcher = ServerWebExchangeMatchers.pathMatchers("/api/**");
 
-        var defaultEntryPoint = new RedirectServerAuthenticationEntryPoint("/oauth2/authorization/cognito");
+        var defaultEntryPoint = new RedirectServerAuthenticationEntryPoint("/oauth2/authorization/okta");
         var defaultMatcher = ServerWebExchangeMatchers.anyExchange();
 
         return new DelegatingServerAuthenticationEntryPoint(

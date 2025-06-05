@@ -1,3 +1,9 @@
+okta:
+  oauth2:
+    issuer: ${IDP_ISSUER}
+    client-id: ${IDP_CLIENT_ID}
+    client-secret: ${IDP_CLIENT_SECRET}
+
 spring:
   application:
     name: myfinances-gateway
@@ -25,21 +31,6 @@ spring:
             - Path=/
           filters:
             - RedirectTo=302, /app
-  security:
-    oauth2:
-      client:
-        provider:
-          cognito:
-            issuer-uri: ${IDP_ISSUER}
-            user-name-attribute: email
-        registration:
-          cognito:
-            provider: cognito
-            client-id: ${IDP_CLIENT_ID}
-            client-secret: ${IDP_CLIENT_SECRET}
-            scope: openid,email,profile
-            redirect-uri: ${APP_URL}/login/oauth2/code/cognito
-            authorization-grant-type: authorization_code
 # Actuator
 management:
   server:
