@@ -35,7 +35,7 @@ public class LogoutController {
         String targetUrl = UriComponentsBuilder
                 .fromUri(URI.create(idpUrl + "/v2/logout"))
                 .queryParam("client_id", idpClientId)
-                .queryParam("logout_uri", app_url)
+                .queryParam("returnTo", app_url)
                 .encode(UTF_8)
                 .build()
                 .toUriString();
