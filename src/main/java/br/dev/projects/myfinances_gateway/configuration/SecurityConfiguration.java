@@ -63,9 +63,7 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint(delegatingAuthenticationEntryPoint())
                 )
                 .oauth2Login(login -> login
-                        .authorizedClientRepository(authorizedClientRepository())
-                        .authorizationRequestResolver(new CustomAuthorizationRequestResolver(clientRegistrationRepository)
-                ))
+                        .authorizedClientRepository(authorizedClientRepository()))
                 .build();
     }
 
