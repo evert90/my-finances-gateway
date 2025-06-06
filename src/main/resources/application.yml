@@ -5,6 +5,12 @@ okta:
     client-secret: ${IDP_CLIENT_SECRET}
 
 spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            scope: openid,profile,email,offline_access
   application:
     name: myfinances-gateway
   session:
@@ -44,6 +50,8 @@ server:
   forward-headers-strategy: native
   reactive:
     session:
+      cookie:
+        max-age: 2592000
       timeout: 30d
 
 #MONITORING
