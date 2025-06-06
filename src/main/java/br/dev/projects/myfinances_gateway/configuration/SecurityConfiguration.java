@@ -24,6 +24,7 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 import org.springframework.web.server.WebFilter;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.util.List;
 
 @Configuration
@@ -44,7 +45,11 @@ public class SecurityConfiguration {
 
         // https://docs.spring.io/spring-security/reference/5.8-SNAPSHOT/migration/reactive.html#reactive-csrf-breach-opt-out
         CookieServerCsrfTokenRepository tokenRepository = new CookieServerCsrfTokenRepository();
-        tokenRepository.setCookieCustomizer(cookie -> cookie.httpOnly(false).sameSite(Cookie.SameSite.LAX.attributeValue()));
+        tokenRepository.setCookieCustomizer(cookie -> cookie
+                .maxAge(Duration.ofDays(30))
+                .httpOnly(false)
+                .sameSite(Cookie.SameSite.LAX.attributeValue())
+        );
         XorServerCsrfTokenRequestAttributeHandler delegate = new XorServerCsrfTokenRequestAttributeHandler();
         ServerCsrfTokenRequestHandler requestHandler = delegate::handle;
 
