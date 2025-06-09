@@ -2,13 +2,13 @@ package br.dev.projects.myfinances_gateway.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.server.WebFilterExchange;
 import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebSession;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
@@ -31,7 +31,8 @@ public class LogoutController {
     private final SecurityContextServerLogoutHandler logoutHandler = new SecurityContextServerLogoutHandler();
 
     @GetMapping("/gateway/logout")
-    public Mono<Void> logout(ServerWebExchange exchange, Authentication authentication, ServerHttpRequest request) {
+    public Mono<Void> logout(ServerWebExchange exchange, Authentication authentication, WebSession session) {
+        session.invalidate();
         String targetUrl = UriComponentsBuilder
                 .fromUri(URI.create(idpUrl + "/v2/logout"))
                 .queryParam("client_id", idpClientId)
