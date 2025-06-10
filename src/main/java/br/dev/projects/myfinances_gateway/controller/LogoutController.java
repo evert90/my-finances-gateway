@@ -32,22 +32,24 @@ public class LogoutController {
 
     @GetMapping("/gateway/logout")
     public Mono<Void> logout(ServerWebExchange exchange, Authentication authentication, WebSession session) {
-        session.invalidate();
-        String targetUrl = UriComponentsBuilder
+        WebFilterExchange webFilterExchange = new WebFilterExchange(exchange, e -> Mono.empty());
+
+        return session.invalidate()
+                .then(logoutHandler.logout(webFilterExchange, authentication))
+                .then(Mono.fromRunnable(() -> {
+                    exchange.getResponse().setStatusCode(HttpStatus.FOUND);
+                    exchange.getResponse().getHeaders().setLocation(URI.create(getLogoutUrl()));
+                }))
+                .then(exchange.getResponse().setComplete());
+    }
+
+    private String getLogoutUrl() {
+        return UriComponentsBuilder
                 .fromUri(URI.create(idpUrl + "/v2/logout"))
                 .queryParam("client_id", idpClientId)
                 .queryParam("returnTo", app_url)
                 .encode(UTF_8)
                 .build()
                 .toUriString();
-
-        WebFilterExchange webFilterExchange = new WebFilterExchange(exchange, (e) -> Mono.empty());
-
-        return logoutHandler.logout(webFilterExchange, authentication)
-                .then(Mono.fromRunnable(() -> {
-                    exchange.getResponse().setStatusCode(HttpStatus.FOUND);
-                    exchange.getResponse().getHeaders().setLocation(URI.create(targetUrl));
-                }))
-                .then(exchange.getResponse().setComplete());
     }
 }
