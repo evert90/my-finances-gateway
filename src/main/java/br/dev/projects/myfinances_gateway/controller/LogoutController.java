@@ -8,7 +8,6 @@ import org.springframework.security.web.server.authentication.logout.SecurityCon
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebSession;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
@@ -31,11 +30,10 @@ public class LogoutController {
     private final SecurityContextServerLogoutHandler logoutHandler = new SecurityContextServerLogoutHandler();
 
     @GetMapping("/gateway/logout")
-    public Mono<Void> logout(ServerWebExchange exchange, Authentication authentication, WebSession session) {
+    public Mono<Void> logout(ServerWebExchange exchange, Authentication authentication) {
         WebFilterExchange webFilterExchange = new WebFilterExchange(exchange, e -> Mono.empty());
 
-        return session.invalidate()
-                .then(logoutHandler.logout(webFilterExchange, authentication))
+        return logoutHandler.logout(webFilterExchange, authentication)
                 .then(Mono.fromRunnable(() -> {
                     exchange.getResponse().setStatusCode(HttpStatus.FOUND);
                     exchange.getResponse().getHeaders().setLocation(URI.create(getLogoutUrl()));
