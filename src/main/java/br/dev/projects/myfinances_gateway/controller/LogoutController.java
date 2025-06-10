@@ -25,7 +25,7 @@ public class LogoutController {
     private String idpUrl;
 
     @Value("${APP_URL}")
-    private String app_url;
+    private String appUrl;
 
     private final SecurityContextServerLogoutHandler logoutHandler = new SecurityContextServerLogoutHandler();
 
@@ -45,7 +45,7 @@ public class LogoutController {
         return UriComponentsBuilder
                 .fromUri(URI.create(idpUrl + "/v2/logout"))
                 .queryParam("client_id", idpClientId)
-                .queryParam("returnTo", app_url)
+                .queryParam("returnTo", appUrl)
                 .encode(UTF_8)
                 .build()
                 .toUriString();
