@@ -59,7 +59,7 @@ public class SecurityConfiguration {
                         .csrfTokenRequestHandler(requestHandler)
                 )
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/app/manifest.json", "/app/api/version/**", "/api/version/**", "/gateway/logout", "/gateway/version/**")
+                        .pathMatchers("/app/manifest.json", "/app/img/icons/*", "/app/api/version/**", "/api/version/**", "/gateway/logout", "/gateway/version/**")
                         .permitAll()
                         .anyExchange()
                         .authenticated()
